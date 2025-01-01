@@ -1,4 +1,11 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+
+using Fluent86.Core.Settings;
+using Fluent86.Core.VirtualMachines;
+using Fluent86.Core.VirtualMachines.List;
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 
 namespace Fluent86.UI;
 
@@ -24,7 +31,20 @@ public partial class App : Application
 	/// <param name="args">Details about the launch request and process.</param>
 	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
+		ConfigureServices();
+
 		_window = new MainWindow();
 		_window.Activate();
+	}
+
+	private static void ConfigureServices()
+	{
+		IServiceCollection services = new ServiceCollection();
+
+		services.AddSingleton<ISettingsProvider, RegistrySettingsProvider>();
+		services.AddSingleton<IVirtualMachineListingProvider, RegistryVirtualMachineListingProvider>();
+		services.AddSingleton<IVirtualMachineManager, VirtualMachineManager>();
+
+		Ioc.Default.ConfigureServices(services.BuildServiceProvider());
 	}
 }

@@ -39,8 +39,14 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\Fluent86.Core\Fluent86.Core.csproj" />
 	</ItemGroup>
 
 	<!--
@@ -58,5 +64,6 @@
 		<PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
 		<PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
 		<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 </Project>
