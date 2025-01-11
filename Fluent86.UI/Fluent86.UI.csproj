@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
@@ -13,8 +14,19 @@
 		<PublishProfile>win-$(Platform).pubxml</PublishProfile>
 		<UseWinUI>true</UseWinUI>
 		<EnableMsixTooling>true</EnableMsixTooling>
+		<!-- Used for deserializing VMs from classic application -->
+		<EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
 	</PropertyGroup>
-
+	<PropertyGroup Label="MultilingualAppToolkit">
+		<MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+		<MultilingualFallbackLanguage>en-US</MultilingualFallbackLanguage>
+		<TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+		<SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="MultilingualResources\Fluent86.UI.qps-ploc.xlf" />
+		<None Remove="Views\VMListView.xaml" />
+	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Assets\SplashScreen.scale-200.png" />
 		<Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -37,18 +49,27 @@
 	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
 		<ProjectCapability Include="Msix" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <ProjectReference Include="..\Fluent86.Core\Fluent86.Core.csproj" />
+		<ProjectReference Include="..\Fluent86.Core\Fluent86.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<XliffResource Include="MultilingualResources\Fluent86.UI.qps-ploc.xlf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Views\VMListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
 	<!--
 		Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
 		Explorer "Package and Publish" context menu entry to be enabled for this project even if
@@ -66,4 +87,8 @@
 		<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
+	<Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
+	<Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets')" Label="MultilingualAppToolkit">
+		<Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build. If building with Visual Studio, please check to ensure that toolkit is properly installed." />
+	</Target>
 </Project>

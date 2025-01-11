@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="FLUENT86.UI/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="FLUENT86.UI/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppName" translate="yes" xml:space="preserve">
+          <source>Fluent86</source>
+          <target state="new">Fluent86</target>
+        </trans-unit>
+        <trans-unit id="Debug" translate="yes" xml:space="preserve">
+          <source>InDev</source>
+          <target state="new">InDev</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

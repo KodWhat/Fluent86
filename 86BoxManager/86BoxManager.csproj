@@ -36,7 +36,6 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
 		<PackageReference Include="System.Data.DataSetExtensions" />
-		<PackageReference Include="System.Runtime.Serialization.Formatters" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Fluent86.Core\Fluent86.Core.csproj" />

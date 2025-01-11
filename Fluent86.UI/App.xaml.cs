@@ -3,6 +3,8 @@
 using Fluent86.Core.Settings;
 using Fluent86.Core.VirtualMachines;
 using Fluent86.Core.VirtualMachines.List;
+using Fluent86.UI.Localization;
+using Fluent86.UI.ViewModels;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -41,9 +43,14 @@ public partial class App : Application
 	{
 		IServiceCollection services = new ServiceCollection();
 
+		services.AddSingleton<ILocalizationProvider, LocalizationProvider>();
+
 		services.AddSingleton<ISettingsProvider, RegistrySettingsProvider>();
 		services.AddSingleton<IVirtualMachineListingProvider, RegistryVirtualMachineListingProvider>();
 		services.AddSingleton<IVirtualMachineManager, VirtualMachineManager>();
+
+		// Add ViewModels
+		services.AddTransient<VMListViewModel>();
 
 		Ioc.Default.ConfigureServices(services.BuildServiceProvider());
 	}
