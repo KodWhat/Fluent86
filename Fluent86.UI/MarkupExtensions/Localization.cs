@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Markup;
 namespace Fluent86.UI.MarkupExtensions;
 
 [MarkupExtensionReturnType(ReturnType = typeof(string))]
-internal sealed class LocalizationExtension : MarkupExtension
+internal sealed partial class LocalizationExtension : MarkupExtension
 {
 	public string Name { get; set; } = string.Empty;
 

@@ -7,10 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:viewmodels="using:Fluent86.UI.ViewModels"
+	xmlns:converters="using:Fluent86.UI.Converters" xmlns:usercontrols="using:Fluent86.UI.UserControls"
 	d:DataContext="{d:DesignInstance Type=viewmodels:VMListViewModel}"
 	mc:Ignorable="d">
 	<Grid>
-		<ScrollViewer>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<ItemsControl ItemsSource="{Binding VirtualMachines}" Margin="12">
 				<ItemsControl.ItemContainerStyle>
 					<Style TargetType="ContentPresenter">
@@ -19,11 +20,7 @@
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-							<Expander.Header>
-								<TextBlock Text="{Binding Name}"/>
-							</Expander.Header>
-						</Expander>
+						<usercontrols:VMListItem/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>

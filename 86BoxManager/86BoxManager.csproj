@@ -31,11 +31,11 @@
 		</COMReference>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CSharp" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" />
-		<PackageReference Include="System.Data.DataSetExtensions" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Fluent86.Core\Fluent86.Core.csproj" />

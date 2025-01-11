@@ -14,6 +14,14 @@
           <source>InDev</source>
           <target state="new">InDev</target>
         </trans-unit>
+        <trans-unit id="VmInfoDescriptionLabel" translate="yes" xml:space="preserve">
+          <source>Description:</source>
+          <target state="new">Description:</target>
+        </trans-unit>
+        <trans-unit id="VmInfoPathLabel" translate="yes" xml:space="preserve">
+          <source>Path:</source>
+          <target state="new">Path:</target>
+        </trans-unit>
       </group>
     </body>
   </file>

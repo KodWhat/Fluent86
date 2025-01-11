@@ -123,4 +123,10 @@
   <data name="Debug" xml:space="preserve">
     <value>InDev</value>
   </data>
+  <data name="VmInfoDescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="VmInfoPathLabel" xml:space="preserve">
+    <value>Path:</value>
+  </data>
 </root>

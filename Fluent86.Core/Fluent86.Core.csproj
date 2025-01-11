@@ -10,8 +10,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentResults" />
-		<PackageReference Include="System.Runtime.Serialization.Formatters" />
+		<PackageReference Include="FluentResults" Version="3.16.0" />
+		<PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.0" />
 	</ItemGroup>
 
 </Project>

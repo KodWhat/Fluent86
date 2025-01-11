@@ -51,10 +51,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250109001-experimental2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -64,12 +64,7 @@
 	<ItemGroup>
 		<XliffResource Include="MultilingualResources\Fluent86.UI.qps-ploc.xlf" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="Views\VMListView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
+	
 	<!--
 		Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
 		Explorer "Package and Publish" context menu entry to be enabled for this project even if
