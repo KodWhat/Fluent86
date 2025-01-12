@@ -27,6 +27,26 @@
 			</TitleBar.IconSource>
 			<TextBlock></TextBlock>
 		</TitleBar>
-		<views:VMListView Grid.Row="1"/>
+		<NavigationView Grid.Row="1" Style="{StaticResource MainNavigationViewStyle}" PaneDisplayMode="LeftCompact">
+			<NavigationView.MenuItems>
+				<NavigationViewItem Content="Machines">
+					<NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xEA6C;" FontFamily="Segoe Fluent Icons"/>
+					</NavigationViewItem.Icon>
+				</NavigationViewItem>
+			</NavigationView.MenuItems>
+
+			<Frame>
+				<views:VMListView/>
+			</Frame>
+			
+			<NavigationView.FooterMenuItems>
+				<NavigationViewItem Content="Settings">
+					<NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xE713;" FontFamily="Segoe Fluent Icons"/>
+					</NavigationViewItem.Icon>
+				</NavigationViewItem>
+			</NavigationView.FooterMenuItems>
+		</NavigationView>
 	</Grid>
 </Window>

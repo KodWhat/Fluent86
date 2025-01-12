@@ -24,10 +24,6 @@
 		<SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Remove="MultilingualResources\Fluent86.UI.qps-ploc.xlf" />
-		<None Remove="Views\VMListView.xaml" />
-	</ItemGroup>
-	<ItemGroup>
 		<Content Include="Assets\SplashScreen.scale-200.png" />
 		<Content Include="Assets\LockScreenLogo.scale-200.png" />
 		<Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -52,6 +48,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.241112-preview1" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
 		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.241112-preview1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />

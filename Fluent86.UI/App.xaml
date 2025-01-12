@@ -9,6 +9,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 				<ResourceDictionary Source="/Resources/Colors.xaml"/>
+				<ResourceDictionary Source="/Resources/CustomNavigationView.xaml"/>
 				<!-- Other merged dictionaries here -->
 			</ResourceDictionary.MergedDictionaries>
 			<!-- Other app resources here -->
