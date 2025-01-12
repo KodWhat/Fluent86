@@ -12,10 +12,10 @@
 	mc:Ignorable="d">
 	<Grid>
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
-			<ItemsControl ItemsSource="{Binding VirtualMachines}" Margin="12">
+			<ItemsControl ItemsSource="{Binding VirtualMachines}" Margin="36">
 				<ItemsControl.ItemContainerStyle>
 					<Style TargetType="ContentPresenter">
-						<Setter Property="Margin" Value="0, 6"/>
+						<Setter Property="Margin" Value="0, 8"/>
 					</Style>
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>

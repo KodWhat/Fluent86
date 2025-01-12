@@ -10,6 +10,8 @@
 	xmlns:corevm="using:Fluent86.Core.VirtualMachines"
 	xmlns:mkext="using:Fluent86.UI.MarkupExtensions"
 	xmlns:converters="using:Fluent86.UI.Converters"
+	xmlns:commuConverters="using:CommunityToolkit.WinUI.Converters"
+	xmlns:commuControls="using:CommunityToolkit.WinUI.Controls"
 	d:DataContext="{d:DesignInstance Type=corevm:VirtualMachineInfo}">
 	<UserControl.Resources>
 		<converters:VMStatusToBrushConverter 
@@ -18,44 +20,58 @@
 			RunningBrush="{StaticResource VMStatusRunningBrush}"
 			PausedBrush="{StaticResource VMStatusPausedBrush}"
 			WaitingBrush="{StaticResource VMStatusPausedBrush}"/>
+
+		<commuConverters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
 	</UserControl.Resources>
-	<Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-		<Expander.Header>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<FontIcon Grid.Column="0" Glyph="&#xEA6C;" Foreground="{Binding Status, Converter={StaticResource VMStatusToBrushConverter}}"/>
-
-				<TextBlock Grid.Column="1" Text="{Binding Name}" Margin="8, 0, 0, 0" VerticalAlignment="Center"/>
-
-				<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
-					<Button>
-						<FontIcon Glyph="&#xE768;"/>
-					</Button>
-					<Button>
-						<FontIcon Glyph="&#xE713;"/>
-					</Button>
-				</StackPanel>
-			</Grid>
-		</Expander.Header>
-		<Expander.Content>
-			<StackPanel>
-				<TextBlock>
-					<TextBlock.Inlines>
-						<Run Text="{mkext:Localization Name=VmInfoPathLabel}" FontWeight="Bold"/>
-						<Run Text="{Binding Path}"/>
-					</TextBlock.Inlines>
-				</TextBlock>
-				<TextBlock>
-					<TextBlock.Inlines>
-						<Run Text="{mkext:Localization Name=VmInfoDescriptionLabel}" FontWeight="Bold"/>
-						<Run Text="{Binding Description}"/>
-					</TextBlock.Inlines>
-				</TextBlock>
+	<commuControls:SettingsExpander 
+		HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+		Header="{Binding Name}"
+		Description="{Binding Description}">
+		<commuControls:SettingsExpander.HeaderIcon>
+			<FontIcon Glyph="&#xEA6C;" Foreground="{Binding Status, Converter={StaticResource VMStatusToBrushConverter}}"/>
+		</commuControls:SettingsExpander.HeaderIcon>
+		<commuControls:SettingsExpander.Content>
+			<StackPanel Orientation="Horizontal" Spacing="8">
+				<Button>
+					<FontIcon Glyph="&#xE768;"/>
+				</Button>
+				<Button Background="Transparent" BorderBrush="Transparent">
+					<Button.Content>
+						<FontIcon Glyph="&#xE712;"/>
+					</Button.Content>
+					<Button.Flyout>
+						<MenuFlyout Placement="Bottom">
+							<MenuFlyoutItem Text="Edit">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE70F;"/>
+								</MenuFlyoutItem.Icon>
+							</MenuFlyoutItem>
+							<MenuFlyoutItem Text="Configure">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE713;"/>
+								</MenuFlyoutItem.Icon>
+							</MenuFlyoutItem>
+							<MenuFlyoutItem Text="Delete" Foreground="{StaticResource SystemFillColorCriticalBrush}">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE74D;" Foreground="{StaticResource SystemFillColorCriticalBrush}"/>
+								</MenuFlyoutItem.Icon>
+							</MenuFlyoutItem>
+						</MenuFlyout>
+					</Button.Flyout>
+				</Button>
 			</StackPanel>
-		</Expander.Content>
-	</Expander>
+		</commuControls:SettingsExpander.Content>
+		<commuControls:SettingsExpander.Items>
+			<commuControls:SettingsCard ContentAlignment="Left">
+				<StackPanel>
+					<TextBlock>
+						<TextBlock.Inlines>
+							<Run Text="{mkext:Localization Name=VmInfoPathLabel}" FontWeight="Bold"/>
+							<Run Text="{Binding Path}"/>
+						</TextBlock.Inlines>
+					</TextBlock>
+				</StackPanel>
+			</commuControls:SettingsCard>
+		</commuControls:SettingsExpander.Items>
+	</commuControls:SettingsExpander>
 </UserControl>
