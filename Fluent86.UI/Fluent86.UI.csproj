@@ -24,6 +24,10 @@
 		<SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Shell.xaml" />
+	  <None Remove="Views\SettingsPage.xaml" />
+	</ItemGroup>
+	<ItemGroup>
 		<Content Include="Assets\SplashScreen.scale-200.png" />
 		<Content Include="Assets\LockScreenLogo.scale-200.png" />
 		<Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -62,6 +66,18 @@
 
 	<ItemGroup>
 		<XliffResource Include="MultilingualResources\Fluent86.UI.qps-ploc.xlf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Shell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Views\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	
 	<!--

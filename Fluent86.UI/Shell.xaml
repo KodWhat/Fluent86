@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Fluent86.UI.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Fluent86.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mkext="using:Fluent86.UI.MarkupExtensions"
+    mc:Ignorable="d"
+	Loaded="Shell_OnLoaded">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<TitleBar 
+			x:Name="TitleBar"
+			Title="{mkext:Localization Name=AppName}"
+			Subtitle="{mkext:Localization Name=Debug}">
+			<TitleBar.IconSource>
+				<FontIconSource Glyph="&#xEA6C;" FontFamily="Segoe Fluent Icons"/>
+			</TitleBar.IconSource>
+			<TextBlock></TextBlock>
+		</TitleBar>
+		<NavigationView 
+			x:Name="NavView"
+			Grid.Row="1"
+			Style="{StaticResource MainNavigationViewStyle}"
+			PaneDisplayMode="LeftCompact"
+			ItemInvoked="NavView_OnItemInvoked">
+			<NavigationView.MenuItems>
+				<NavigationViewItem 
+					x:Name="MachinesNavItem"
+					Content="{mkext:Localization Name=Nav_VMs}">
+					<NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xEA6C;" FontFamily="Segoe Fluent Icons"/>
+					</NavigationViewItem.Icon>
+				</NavigationViewItem>
+			</NavigationView.MenuItems>
+
+			<Frame x:Name="NavFrame" />
+
+			<NavigationView.FooterMenuItems>
+				<NavigationViewItem 
+					x:Name="SettingsNavItem"
+					Content="{mkext:Localization Name=Nav_Settings}">
+					<NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xE713;" FontFamily="Segoe Fluent Icons"/>
+					</NavigationViewItem.Icon>
+				</NavigationViewItem>
+			</NavigationView.FooterMenuItems>
+		</NavigationView>
+	</Grid>
+</UserControl>

@@ -6,9 +6,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Fluent86.UI.Views;
 
-public sealed partial class VMListView : Page
+public sealed partial class VMListPage : Page
 {
-	public VMListView()
+	public VMListPage()
 	{
 		VMListViewModel viewModel = Ioc.Default.GetRequiredService<VMListViewModel>();
 		DataContext = viewModel;

@@ -22,6 +22,14 @@
           <source>Path:</source>
           <target state="new">Path:</target>
         </trans-unit>
+        <trans-unit id="Nav_Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="new">Settings</target>
+        </trans-unit>
+        <trans-unit id="Nav_VMs" translate="yes" xml:space="preserve">
+          <source>Machines</source>
+          <target state="new">Machines</target>
+        </trans-unit>
       </group>
     </body>
   </file>

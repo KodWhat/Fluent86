@@ -123,6 +123,12 @@
   <data name="Debug" xml:space="preserve">
     <value>InDev</value>
   </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Nav_VMs" xml:space="preserve">
+    <value>Machines</value>
+  </data>
   <data name="VmInfoDescriptionLabel" xml:space="preserve">
     <value>Description:</value>
   </data>
