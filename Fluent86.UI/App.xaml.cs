@@ -16,7 +16,7 @@ namespace Fluent86.UI;
 /// </summary>
 public partial class App : Application
 {
-	private Window? _window;
+	public Window? Window { get; private set; }
 
 	/// <summary>
 	/// Initializes the singleton application object.  This is the first line of authored code
@@ -35,8 +35,11 @@ public partial class App : Application
 	{
 		ConfigureServices();
 
-		_window = new MainWindow();
-		_window.Activate();
+		ISettingsProvider settingsProvider = Ioc.Default.GetRequiredService<ISettingsProvider>();
+		settingsProvider.LoadSettings();
+
+		Window = new MainWindow();
+		Window.Activate();
 	}
 
 	private static void ConfigureServices()

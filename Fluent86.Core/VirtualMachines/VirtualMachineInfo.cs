@@ -1,7 +1,10 @@
 ﻿using System;
 
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Fluent86.Core.VirtualMachines;
-public record VirtualMachineInfo
+
+public partial class VirtualMachineInfo : ObservableObject
 {
 	public required string Name { get; set; }
 
@@ -9,7 +12,8 @@ public record VirtualMachineInfo
 
 	public required string Path { get; set; }
 
-	public VirtualMachineStatus Status { get; set; } = VirtualMachineStatus.Stopped;
+	[ObservableProperty]
+	public VirtualMachineStatus _status = VirtualMachineStatus.Stopped;
 
 	public int RunningProcessId { get; set; } = 0;
 

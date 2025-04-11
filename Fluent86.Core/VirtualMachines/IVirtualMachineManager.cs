@@ -16,7 +16,7 @@ public interface IVirtualMachineManager
 
 	Result<VirtualMachineInfo> ImportVirtualMachine(string sourcePath, string name, string description);
 
-	Result StartVirtualMachine();
+	Result StartVirtualMachine(VirtualMachineInfo virtualMachineInfo, nint f86Handle);
 
 	Result StopVirtualMachine();
 

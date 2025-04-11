@@ -9,7 +9,8 @@
 	xmlns:viewmodels="using:Fluent86.UI.ViewModels"
 	xmlns:converters="using:Fluent86.UI.Converters" xmlns:usercontrols="using:Fluent86.UI.UserControls"
 	d:DataContext="{d:DesignInstance Type=viewmodels:VMListViewModel}"
-	mc:Ignorable="d">
+	mc:Ignorable="d"
+	x:Name="Root">
 	<Grid>
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<StackPanel Margin="36, 0, 36, 0">
@@ -21,7 +22,7 @@
 					</ItemsControl.ItemContainerStyle>
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
-							<usercontrols:VMListItem/>
+							<usercontrols:VMListItem StartClicked="VMListItem_StartClicked"/>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>

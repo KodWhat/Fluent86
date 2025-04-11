@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
+using Fluent86.Core.Settings;
 using Fluent86.Core.VirtualMachines.List;
 
 using FluentResults;
 
 namespace Fluent86.Core.VirtualMachines;
 
-public class VirtualMachineManager(IVirtualMachineListingProvider virtualMachineStorageProvider) : IVirtualMachineManager
+public class VirtualMachineManager(
+		IVirtualMachineListingProvider virtualMachineStorageProvider,
+		ISettingsProvider settingsProvider
+	) : IVirtualMachineManager
 {
 	private readonly IVirtualMachineListingProvider _virtualMachineListingProvider = virtualMachineStorageProvider;
+	private readonly ISettingsProvider _settingsProvider = settingsProvider;
 
 	public Result<IReadOnlyCollection<VirtualMachineInfo>> ListVirtualMachines()
 	{
@@ -150,9 +156,35 @@ public class VirtualMachineManager(IVirtualMachineListingProvider virtualMachine
 		return virtualMachineInfo;
 	}
 
-	public Result StartVirtualMachine()
+	public Result StartVirtualMachine(VirtualMachineInfo virtualMachineInfo, nint f86Handle)
 	{
-		throw new System.NotImplementedException();
+		string handleHexString = string.Format("{0:X16}", f86Handle);
+		string uidHexString = string.Format("{0:X16}", unchecked((uint)virtualMachineInfo.Path.GetHashCode()));
+
+		Process p = new Process();
+		p.StartInfo.FileName = _settingsProvider.SettingsValues.BoxExePath;
+		string arguments = $"--vmpath \"{virtualMachineInfo.Path}\"";
+		arguments += $" --hwnd {uidHexString},{handleHexString}";
+
+		if (_settingsProvider.SettingsValues.LoggingEnabled)
+		{
+			arguments += $" --logfile \"{_settingsProvider.SettingsValues.LogPath}\"";
+		}
+
+		if (_settingsProvider.SettingsValues.ShowConsole)
+		{
+			p.StartInfo.RedirectStandardOutput = true;
+			p.StartInfo.UseShellExecute = false;
+		}
+
+		p.StartInfo.Arguments = arguments;
+
+		bool success = p.Start();
+
+		virtualMachineInfo.RunningProcessId = p.Id;
+		virtualMachineInfo.Status = VirtualMachineStatus.Running;
+
+		return Result.Ok();
 	}
 
 	public Result StopVirtualMachine()
