@@ -93,7 +93,7 @@ public partial class dlgSettings : Form
 	{
 		try
 		{
-			FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text + @"\86Box.exe");
+			FileVersionInfo vi = FileVersionInfo.GetVersionInfo(txtEXEdir.Text);
 			if (vi.FilePrivatePart >= 3541) //Officially supported builds
 			{
 				lbl86BoxVer1.Text = vi.FileMajorPart.ToString() + "." + vi.FileMinorPart.ToString() + "." + vi.FileBuildPart.ToString() + "." + vi.FilePrivatePart.ToString() + " - fully compatible";
@@ -129,7 +129,7 @@ public partial class dlgSettings : Form
 				return false;
 			}
 		}
-		if (!File.Exists(Path.Combine(txtEXEdir.Text, "86Box.exe")))
+		if (!File.Exists(Path.Combine(txtEXEdir.Text)))
 		{
 			DialogResult result = MessageBox.Show("86Box.exe could not be found in the directory you specified, so you won't be able to use any virtual machines. Are you sure you want to use this path?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 			if (result == DialogResult.No)
@@ -180,13 +180,13 @@ public partial class dlgSettings : Form
 
 	private async void btnBrowse1_Click(object sender, EventArgs e)
 	{
-		FolderSelectDialog dialog = new FolderSelectDialog
+		OpenFileDialog dialog = new OpenFileDialog
 		{
 			InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer),
 			Title = "Select a folder where 86Box program files and the roms folder are located"
 		};
-
-		if (await dialog.Show(Handle))
+		DialogResult result = dialog.ShowDialog();
+		if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
 		{
 			txtEXEdir.Text = dialog.FileName;
 		}

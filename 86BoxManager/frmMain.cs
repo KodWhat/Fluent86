@@ -1193,7 +1193,7 @@ public partial class frmMain : Form
 			if (vm.Status is VirtualMachineStatus.Stopped)
 			{
 				Process p = new Process();
-				p.StartInfo.FileName = Path.Combine(_settingsProvider.SettingsValues.BoxExePath, "86Box.exe");
+				p.StartInfo.FileName = _settingsProvider.SettingsValues.BoxExePath;
 				p.StartInfo.Arguments = "--vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\" --hwnd " + idString + "," + hWndHex;
 
 				if (_settingsProvider.SettingsValues.LoggingEnabled)
@@ -1327,7 +1327,7 @@ public partial class frmMain : Form
 			try
 			{
 				Process p = new Process();
-				p.StartInfo.FileName = Path.Combine(_settingsProvider.SettingsValues.BoxExePath, "86Box.exe");
+				p.StartInfo.FileName = _settingsProvider.SettingsValues.BoxExePath;
 				p.StartInfo.Arguments = "--settings --vmpath \"" + lstVMs.SelectedItems[0].SubItems[3].Text + "\"";
 				if (!_settingsProvider.SettingsValues.ShowConsole)
 				{
