@@ -15,7 +15,7 @@ namespace Fluent86.Core.VirtualMachines.List;
 
 public class RegistryVirtualMachineListingProvider(ISettingsProvider settingsProvider) : IVirtualMachineListingProvider
 {
-	private const string VM_KEY = @"SOFTWARE\86Box\Virtual Machines";
+	private const string VmKey = @"SOFTWARE\86Box\Virtual Machines";
 
 	private readonly ISettingsProvider _settingsProvider = settingsProvider;
 
@@ -25,11 +25,11 @@ public class RegistryVirtualMachineListingProvider(ISettingsProvider settingsPro
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
 		try
 		{
-			RegistryKey? regKey = Registry.CurrentUser.CreateSubKey(VM_KEY);
+			RegistryKey? regKey = Registry.CurrentUser.CreateSubKey(VmKey);
 
 			if (regKey == null)
 			{
-				return Result.Fail($"Can't open or create registry key {VM_KEY}");
+				return Result.Fail($"Can't open or create registry key {VmKey}");
 			}
 
 			List<VirtualMachineInfo> virtualMachineInfo = [];
@@ -87,11 +87,11 @@ public class RegistryVirtualMachineListingProvider(ISettingsProvider settingsPro
 			bf.Serialize(ms, classicVM);
 			byte[] data = ms.ToArray();
 
-			RegistryKey? registryKey = Registry.CurrentUser.OpenSubKey(VM_KEY, writable: true);
+			RegistryKey? registryKey = Registry.CurrentUser.OpenSubKey(VmKey, writable: true);
 
 			if (registryKey is null)
 			{
-				return Result.Fail($"Can't open or create registry key {VM_KEY}");
+				return Result.Fail($"Can't open or create registry key {VmKey}");
 			}
 
 			registryKey.SetValue(virtualMachineInfo.Name, data, RegistryValueKind.Binary);
@@ -115,11 +115,11 @@ public class RegistryVirtualMachineListingProvider(ISettingsProvider settingsPro
 	{
 		try
 		{
-			RegistryKey? regkey = Registry.CurrentUser.OpenSubKey(VM_KEY, true);
+			RegistryKey? regkey = Registry.CurrentUser.OpenSubKey(VmKey, true);
 
 			if (regkey == null)
 			{
-				return Result.Fail($"Can't open or create registry key {VM_KEY}");
+				return Result.Fail($"Can't open or create registry key {VmKey}");
 			}
 
 			regkey.DeleteValue(virtualMachineInfo.Name);
@@ -137,7 +137,7 @@ public class RegistryVirtualMachineListingProvider(ISettingsProvider settingsPro
 	{
 		try
 		{
-			RegistryKey? regkey = Registry.CurrentUser.OpenSubKey(VM_KEY, true);
+			RegistryKey? regkey = Registry.CurrentUser.OpenSubKey(VmKey, true);
 
 			if (regkey == null)
 			{

@@ -1,5 +1,7 @@
 using Microsoft.UI.Xaml;
 
+using WinRT.Interop;
+
 namespace Fluent86.UI;
 
 /// <summary>
@@ -7,9 +9,14 @@ namespace Fluent86.UI;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
-	public MainWindow()
+	private readonly IWindowMessagesListener _windowMessagesListener;
+
+	public MainWindow(IWindowMessagesListener windowMessagesListener)
 	{
 		InitializeComponent();
 		Shell.SetTitleBar(this);
+		_windowMessagesListener = windowMessagesListener;
+
+		_windowMessagesListener.AttachListenerToHandle(WindowNative.GetWindowHandle(this));
 	}
 }

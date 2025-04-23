@@ -13,7 +13,7 @@ public partial class VirtualMachineInfo : ObservableObject
 	public required string Path { get; set; }
 
 	[ObservableProperty]
-	public VirtualMachineStatus _status = VirtualMachineStatus.Stopped;
+	private VirtualMachineStatus _status = VirtualMachineStatus.Stopped;
 
 	public int RunningProcessId { get; set; } = 0;
 

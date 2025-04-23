@@ -1077,15 +1077,9 @@ public partial class frmMain : Form
 		lstVMs.Items.Clear();
 		VMCountRefresh();
 
-		Result<IReadOnlyCollection<VirtualMachineInfo>> listVirtualMachinesResult = _virtualMachineManager.ListVirtualMachines();
+		IReadOnlyCollection<VirtualMachineInfo> listVirtualMachinesResult = _virtualMachineManager.VirtualMachines;
 
-		if (listVirtualMachinesResult.IsFailed)
-		{
-			MessageBox.Show("The Virtual Machines registry key could not be opened, so no stored virtual machines can be used. Make sure you have the required permissions and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			return;
-		}
-
-		foreach (VirtualMachineInfo vmInfo in listVirtualMachinesResult.Value)
+		foreach (VirtualMachineInfo vmInfo in listVirtualMachinesResult)
 		{
 			ListViewItem newLvi = new ListViewItem(vmInfo.Name)
 			{

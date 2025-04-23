@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 
 using Fluent86.Core.Settings;
 using Fluent86.Core.VirtualMachines.List;
@@ -18,9 +20,24 @@ public class VirtualMachineManager(
 	private readonly IVirtualMachineListingProvider _virtualMachineListingProvider = virtualMachineStorageProvider;
 	private readonly ISettingsProvider _settingsProvider = settingsProvider;
 
-	public Result<IReadOnlyCollection<VirtualMachineInfo>> ListVirtualMachines()
+	private IReadOnlyCollection<VirtualMachineInfo>? _virtualMachines;
+
+	public IReadOnlyCollection<VirtualMachineInfo> VirtualMachines
 	{
-		return _virtualMachineListingProvider.GetVirtualMachines();
+		get
+		{
+			if (_virtualMachines == null)
+			{
+				FetchVmList();
+			}
+			return _virtualMachines;
+		}
+	}
+
+	[MemberNotNull(nameof(_virtualMachines))]
+	private void FetchVmList()
+	{
+		_virtualMachines = _virtualMachineListingProvider.GetVirtualMachines().ValueOrDefault ?? [];
 	}
 
 	public Result<VirtualMachineInfo> CreateVirtualMachine(string name, string description, bool createDirectory = true)
@@ -182,7 +199,7 @@ public class VirtualMachineManager(
 		bool success = p.Start();
 
 		virtualMachineInfo.RunningProcessId = p.Id;
-		virtualMachineInfo.Status = VirtualMachineStatus.Running;
+		virtualMachineInfo.Status = VirtualMachineStatus.Waiting;
 
 		return Result.Ok();
 	}
@@ -210,6 +227,37 @@ public class VirtualMachineManager(
 	public Result<bool> IsNameInUse(string name)
 	{
 		return _virtualMachineListingProvider.IsNameInUse(name);
+	}
+
+	public Result UpdateStatus(nint runningHandle, VirtualMachineStatus newStatus)
+	{
+		if (runningHandle == IntPtr.Zero)
+		{
+			return Result.Fail("Running handle is Zero");
+		}
+
+		VirtualMachineInfo? vm = VirtualMachines.FirstOrDefault(vm => vm.RunningWindowHandle == runningHandle);
+
+		if (vm is null)
+		{
+			return Result.Fail("Virtual machine not found");
+		}
+
+		vm.Status = newStatus;
+		return Result.Ok();
+	}
+	public Result Set86BoxHandleToVmByUid(nint uid, nint runningWindowHandle)
+	{
+		VirtualMachineInfo? vmi = VirtualMachines.FirstOrDefault(vm => unchecked((uint)vm.Path.GetHashCode()) == uid);
+
+		if (vmi is null)
+		{
+			return Result.Fail($"No path hash code matches {uid}");
+		}
+
+		vmi.RunningWindowHandle = runningWindowHandle;
+
+		return Result.Ok();
 	}
 
 	public Result ClearCmos(VirtualMachineInfo virtualMachineInfo)

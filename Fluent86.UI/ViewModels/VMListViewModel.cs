@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using Fluent86.Core.VirtualMachines;
 using Fluent86.UI.Extensions;
 
-using FluentResults;
+using Microsoft.Extensions.Logging;
 
 using WinRT.Interop;
 
@@ -18,12 +18,15 @@ namespace Fluent86.UI.ViewModels;
 public sealed partial class VMListViewModel : ObservableRecipient
 {
 	private readonly IVirtualMachineManager _virtualMachineManager;
+	private readonly ILogger<VMListViewModel> _logger;
 
 	public ObservableCollection<VirtualMachineInfo> VirtualMachines { get; } = [];
 
-	public VMListViewModel(IVirtualMachineManager virtualMachineManager)
+	public VMListViewModel(IVirtualMachineManager virtualMachineManager, ILogger<VMListViewModel> logger)
 	{
 		_virtualMachineManager = virtualMachineManager;
+		_logger = logger;
+
 		LoadVMs();
 	}
 
@@ -31,20 +34,15 @@ public sealed partial class VMListViewModel : ObservableRecipient
 	{
 		VirtualMachines.Clear();
 
-		Result<IReadOnlyCollection<VirtualMachineInfo>> listVMResult = _virtualMachineManager.ListVirtualMachines();
+		IReadOnlyCollection<VirtualMachineInfo> listVMResult = _virtualMachineManager.VirtualMachines;
 
-		if (listVMResult.IsFailed)
-		{
-			return;
-		}
-
-		VirtualMachines.AddRange(listVMResult.Value.OrderBy(i => i.Name));
+		VirtualMachines.AddRange(listVMResult.OrderBy(i => i.Name));
 	}
 
 	[RelayCommand]
 	private void StartVM(VirtualMachineInfo vmInfo)
 	{
-		System.Diagnostics.Debug.WriteLine($"Start VM {vmInfo.Name}");
+		_logger.LogDebug("Start VM {vmName}", vmInfo.Name);
 		App app = (App.Current as App) ?? throw new ApplicationException("Unable to get current App instance");
 		nint winHandle = WindowNative.GetWindowHandle(app.Window);
 		_virtualMachineManager.StartVirtualMachine(vmInfo, winHandle);

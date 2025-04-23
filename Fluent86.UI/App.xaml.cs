@@ -9,6 +9,8 @@ using Fluent86.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 
+using Serilog;
+
 namespace Fluent86.UI;
 
 /// <summary>
@@ -25,6 +27,12 @@ public partial class App : Application
 	public App()
 	{
 		InitializeComponent();
+
+		Log.Logger = new LoggerConfiguration()
+			.MinimumLevel.Debug()
+			.Enrich.FromLogContext()
+			.WriteTo.Debug()
+			.CreateLogger();
 	}
 
 	/// <summary>
@@ -38,7 +46,7 @@ public partial class App : Application
 		ISettingsProvider settingsProvider = Ioc.Default.GetRequiredService<ISettingsProvider>();
 		settingsProvider.LoadSettings();
 
-		Window = new MainWindow();
+		Window = new MainWindow(Ioc.Default.GetRequiredService<IWindowMessagesListener>());
 		Window.Activate();
 	}
 
@@ -46,11 +54,16 @@ public partial class App : Application
 	{
 		IServiceCollection services = new ServiceCollection();
 
+		services.AddLogging(loggingBuilder => loggingBuilder
+			.AddSerilog(dispose: true)
+		);
+
 		services.AddSingleton<ILocalizationProvider, LocalizationProvider>();
 
 		services.AddSingleton<ISettingsProvider, RegistrySettingsProvider>();
 		services.AddSingleton<IVirtualMachineListingProvider, RegistryVirtualMachineListingProvider>();
 		services.AddSingleton<IVirtualMachineManager, VirtualMachineManager>();
+		services.AddSingleton<IWindowMessagesListener, WindowMessagesListener>();
 
 		// Add ViewModels
 		services.AddTransient<VMListViewModel>();

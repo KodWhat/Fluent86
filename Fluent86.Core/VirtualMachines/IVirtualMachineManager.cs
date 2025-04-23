@@ -6,7 +6,7 @@ namespace Fluent86.Core.VirtualMachines;
 
 public interface IVirtualMachineManager
 {
-	Result<IReadOnlyCollection<VirtualMachineInfo>> ListVirtualMachines();
+	IReadOnlyCollection<VirtualMachineInfo> VirtualMachines { get; }
 
 	Result<VirtualMachineInfo> CreateVirtualMachine(string name, string description, bool createDirectory = true);
 
@@ -25,6 +25,10 @@ public interface IVirtualMachineManager
 	Result PauseVirtualMachine();
 
 	Result ResumeVirtualMachine();
+
+	Result UpdateStatus(nint runningHandle, VirtualMachineStatus newStatus);
+
+	Result Set86BoxHandleToVmByUid(nint uid, nint runningWindowHandle);
 
 	Result ClearCmos(VirtualMachineInfo virtualMachineInfo);
 
